@@ -13,22 +13,20 @@ Build a web app that lets customers book vehicle service and receive an invoice.
 - Admins create invoices and set payment to Paid or Pending.
 - Customers view and print their own invoices.
 
-Prices are stored in paise. Invoices keep the part prices used when they were created. Stock tracking and online payments are not included.
+Prices are entered in rupees and stored in paise. Invoices keep the part prices used when they were created. Stock tracking and online payments are not included.
 
 ## Progress
 
-All four workflow areas are implemented in the current app and connected through SQLite. Tests, including an end-to-end test, are written.
-
-The code is currently compact: most routes and database logic are in `app/__init__.py`. The role assignments below describe the team's planned responsibilities.
+All four workflow areas are implemented and connected through SQLite. Tests, including an end-to-end test, are written. The app code is separated by feature; the database and shared helpers are kept in shared files.
 
 ## Team roles
 
-| Member | Responsibility |
-|---|---|
-| Justin | Registration, login, roles, and access checks |
-| Joel | Vehicles, appointments, and ownership checks |
-| Manish | Mechanics, service orders, labour/parts, and completion |
-| Rithik | Invoices, payment status, and customer invoice view |
+| Member | Feature file | Responsibility |
+|---|---|---|
+| Justin | `app/auth.py` | Registration, login, roles, and access checks |
+| Joel | `app/booking.py` | Vehicles, appointments, and ownership checks |
+| Manish | `app/service.py` | Mechanics, service orders, labour/parts, and completion |
+| Rithik | `app/invoices.py` | Invoices, payment status, and customer invoice view |
 
 ## Run on Windows
 
@@ -53,8 +51,14 @@ python -m pytest -q
 
 ## Main files
 
-- `app/__init__.py` — app, database, routes, and workflow logic.
+- `app/auth.py` — customer and admin authentication.
+- `app/booking.py` — vehicle registration and appointment booking.
+- `app/service.py` — mechanic assignment and service orders.
+- `app/invoices.py` — invoice generation and payment status.
+- `app/db.py` — SQLite tables and database connection.
+- `app/common.py` — shared login checks, page helper, and currency display.
+- `app/__init__.py` — creates the Flask app and connects the feature files.
 - `app/templates/base.html` — shared page layout.
 - `run.py` — convenience startup script.
-- `tests/test_workflow.py` — automated tests.
-- `requirements.txt` — Python dependencies.
+- `tests/test_workflow.py` — automated workflow tests.
+
